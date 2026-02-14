@@ -52,12 +52,15 @@
             theme: {
                 extend: {
                     colors: {
+                        'brand-charcoal': '#050505',
+                        'brand-gold': '#c5a059',
+                        'brand-gold-light': '#e2c275',
+                        'brand-cream': '#fdfbf7',
+                        'brand-gray': '#a1a1aa',
                         'brand-green': '#1a4d2e',
                         'brand-maroon': '#8b1538',
-                        'brand-gold': '#d4af37',
-                        'brand-cream': '#f8f7f4',
-                        'dark-bg': '#0f172a',
-                        'dark-card': '#1e293b',
+                        'dark-bg': '#050505',
+                        'dark-card': '#111111',
                     },
                     fontFamily: {
                         'display': ['Playfair Display', 'serif'],
@@ -69,36 +72,40 @@
     </script>
 
     <style type="text/tailwindcss">
-        body {
-            font-family: 'Inter', sans-serif;
+        @layer base {
+            body {
+                @apply bg-brand-charcoal text-brand-cream font-body;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                @apply font-display tracking-tight text-brand-gold;
+            }
         }
         
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Playfair Display', serif;
+        .hero-gradient-overlay {
+            background: linear-gradient(to bottom, rgba(5,5,5,0.3) 0%, rgba(5,5,5,1) 100%);
         }
         
-        .hero-gradient {
-            background: linear-gradient(135deg, #1a4d2e 0%, #8b1538 100%);
-        }
-        
-        .text-gradient {
-            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .nav-scrolled {
+            @apply bg-black/80 backdrop-blur-xl border-b border-brand-gold/20 py-2;
         }
 
-        .dark .text-gradient {
-            background: linear-gradient(135deg, #d4af37 0%, #ffffff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .luxe-shadow {
+            box-shadow: 0 10px 30px -10px rgba(197, 160, 89, 0.2);
         }
-        
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+
+        .gold-underline {
+            @apply relative overflow-hidden;
+        }
+        .gold-underline::after {
+            content: '';
+            @apply absolute bottom-0 left-0 w-0 h-0.5 bg-brand-gold transition-all duration-300;
+        }
+        .gold-underline:hover::after {
+            @apply w-full;
+        }
+
+        .text-gradient {
+            @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-gold to-brand-gold-light font-bold;
         }
     </style>
 </head>
@@ -106,88 +113,97 @@
 <body class="bg-brand-cream text-gray-800 dark:bg-dark-bg dark:text-gray-100 transition-colors duration-300">
 
     <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md shadow-md transition-all duration-300">
+    <nav id="navbar" class="fixed w-full top-0 z-50 transition-all duration-500 py-4">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
+            <div class="flex justify-between items-center">
                 <!-- Logo -->
-                <a href="#home" class="flex items-center">
-                    <img src="jillania-logo.png" alt="Jillania Restaurant" class="h-14 object-contain">
+                <a href="#home" class="flex items-center group">
+                    <div class="relative overflow-hidden p-1">
+                        <img src="jillania-logo.png" alt="Jillania Restaurant"
+                            class="h-16 w-auto object-contain transform group-hover:scale-105 transition-transform duration-300">
+                    </div>
                 </a>
 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
+                <div class="hidden md:flex items-center space-x-10">
                     <a href="#home"
-                        class="nav-link text-gray-700 hover:text-brand-gold font-medium transition-colors duration-300">Home</a>
+                        class="gold-underline py-2 text-brand-cream/90 hover:text-brand-gold text-sm font-medium tracking-widest uppercase transition-colors">Home</a>
                     <a href="#about"
-                        class="nav-link text-gray-700 hover:text-brand-gold font-medium transition-colors duration-300">About</a>
+                        class="gold-underline py-2 text-brand-cream/90 hover:text-brand-gold text-sm font-medium tracking-widest uppercase transition-colors">About</a>
                     <a href="#menu"
-                        class="nav-link text-gray-700 hover:text-brand-gold font-medium transition-colors duration-300">Menu</a>
+                        class="gold-underline py-2 text-brand-cream/90 hover:text-brand-gold text-sm font-medium tracking-widest uppercase transition-colors">Menu</a>
                     <a href="#gallery"
-                        class="nav-link text-gray-700 hover:text-brand-gold font-medium transition-colors duration-300">Gallery</a>
+                        class="gold-underline py-2 text-brand-cream/90 hover:text-brand-gold text-sm font-medium tracking-widest uppercase transition-colors">Gallery</a>
                     <a href="#contact"
-                        class="nav-link text-gray-700 hover:text-brand-gold font-medium transition-colors duration-300">Contact</a>
+                        class="gold-underline py-2 text-brand-cream/90 hover:text-brand-gold text-sm font-medium tracking-widest uppercase transition-colors">Contact</a>
 
-                    <!-- Theme Toggle -->
-                    <button id="theme-toggle"
-                        class="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-700">
-                        <svg id="theme-toggle-dark-icon" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                        </svg>
-                        <svg id="theme-toggle-light-icon" class="hidden w-6 h-6" fill="currentColor"
-                            viewBox="0 0 20 20">
-                            <path
-                                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464a1 1 0 101.414-1.414l-.707-.707a1 1 0 10-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                                fill-rule="evenodd" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
+                    <!-- Reserve Button -->
+                    <a href="#contact"
+                        class="px-6 py-2 border border-brand-gold text-brand-gold text-xs tracking-widest uppercase hover:bg-brand-gold hover:text-black transition-all duration-300">Reserve</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden text-gray-700 focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
+                <button id="mobile-menu-btn" class="md:hidden text-brand-gold focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M4 8h16M4 16h16"></path>
                         <path id="close-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
 
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden pb-4">
-                <a href="#home"
-                    class="block py-2 text-gray-700 hover:text-brand-gold font-medium transition-colors duration-300">Home</a>
-                <a href="#about"
-                    class="block py-2 text-gray-700 hover:text-brand-gold font-medium transition-colors duration-300">About</a>
-                <a href="#menu"
-                    class="block py-2 text-gray-700 hover:text-brand-gold font-medium transition-colors duration-300">Menu</a>
-                <a href="#gallery"
-                    class="block py-2 text-gray-700 hover:text-brand-gold font-medium transition-colors duration-300">Gallery</a>
-                <a href="#contact"
-                    class="block py-2 text-gray-700 hover:text-brand-gold font-medium transition-colors duration-300">Contact</a>
+            <div id="mobile-menu"
+                class="hidden md:hidden absolute left-0 w-full bg-black/95 border-b border-brand-gold/20 py-8 px-4 flex flex-col items-center space-y-6 animate-fade-in">
+                <a href="#home" class="text-brand-cream hover:text-brand-gold tracking-widest uppercase">Home</a>
+                <a href="#about" class="text-brand-cream hover:text-brand-gold tracking-widest uppercase">About</a>
+                <a href="#menu" class="text-brand-cream hover:text-brand-gold tracking-widest uppercase">Menu</a>
+                <a href="#gallery" class="text-brand-cream hover:text-brand-gold tracking-widest uppercase">Gallery</a>
+                <a href="#contact" class="text-brand-cream hover:text-brand-gold tracking-widest uppercase">Contact</a>
+                <a href="#contact" class="px-8 py-3 bg-brand-gold text-black tracking-widest uppercase">Reserve Now</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative h-screen flex items-center justify-center hero-gradient">
-        <div class="absolute inset-0 bg-black opacity-30"></div>
-        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
-            <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 animate-fade-in">
-                Authentic Desi Flavors at<br>
-                <span class="text-gradient">Jillania Restaurant</span>
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image -->
+        <div
+            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center">
+        </div>
+        <!-- Overlays -->
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="absolute inset-0 hero-gradient-overlay"></div>
+
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+            <div class="mb-6 opacity-0 animate-fade-in transition-all duration-1000 delay-300">
+                <span class="text-brand-gold tracking-[0.4em] uppercase text-sm font-medium">Fine Dining
+                    Experience</span>
+                <div class="w-12 h-px bg-brand-gold mx-auto mt-4"></div>
+            </div>
+
+            <h1 class="text-6xl md:text-8xl font-display font-bold text-brand-cream mb-8 leading-tight">
+                Traditional Taste,<br>
+                <span class="text-gradient">Modern Elegance</span>
             </h1>
-            <p class="text-xl md:text-2xl text-gray-200 mb-10 font-light">
-                Where tradition meets taste, and every dish tells a story of heritage and passion
+
+            <p class="text-lg md:text-xl text-brand-gray mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+                Discover the finest Pakistani and Mughlai cuisine crafted with recipes passed down through generations
+                of masters.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <a href="#menu"
-                    class="px-8 py-4 bg-brand-gold text-brand-maroon font-semibold rounded-lg hover:bg-yellow-400 transform hover:scale-105 transition-all duration-300 shadow-xl">
-                    View Menu
+                    class="group relative px-10 py-4 bg-brand-gold text-brand-charcoal font-bold tracking-widest uppercase overflow-hidden transition-all duration-300">
+                    <span class="relative z-10">Explore Menu</span>
+                    <div
+                        class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    </div>
                 </a>
                 <a href="#contact"
-                    class="px-8 py-4 bg-transparent border-2 border-brand-gold text-brand-gold font-semibold rounded-lg hover:bg-brand-gold hover:text-brand-maroon transform hover:scale-105 transition-all duration-300">
-                    Book a Table
+                    class="px-10 py-4 border border-brand-gold text-brand-gold font-bold tracking-widest uppercase hover:bg-brand-gold hover:text-black transition-all duration-300">
+                    Book Table
                 </a>
             </div>
         </div>
@@ -201,350 +217,366 @@
         </div>
     </section>
 
-    <!-- About Us Section -->
-    <section id="about" class="py-20 bg-white dark:bg-slate-900 transition-colors">
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-brand-charcoal overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="grid md:grid-cols-2 gap-20 items-center">
+                <div class="relative">
+                    <div
+                        class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-transform duration-700">
+                        <img src="https://images.unsplash.com/photo-1544124499-58912cbddaad?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                            alt="The Art of Dining" class="w-full">
+                    </div>
+                    <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-brand-gold/10 rounded-full blur-3xl"></div>
+                    <div class="absolute -top-10 -left-10 w-48 h-48 bg-brand-gold/10 rounded-full blur-2xl"></div>
+                </div>
+
                 <div>
-                    <h2 class="text-4xl md:text-5xl font-display font-bold text-brand-maroon mb-6">
-                        Our Story
-                    </h2>
-                    <div class="w-20 h-1 bg-brand-gold mb-6"></div>
-                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-                        For over three generations, Jillania Restaurant has been serving authentic Pakistani and Mughlai
-                        cuisine that captures the essence of traditional flavors and aromatic spices.
+                    <div class="mb-6">
+                        <span class="text-brand-gold tracking-widest uppercase text-sm font-semibold">Our Story</span>
+                        <h2 class="text-4xl md:text-5xl font-display font-bold mt-2 mb-6 text-brand-cream">A Legacy of
+                            <br><span class="text-brand-gold">Masterful Cuisine</span>
+                        </h2>
+                        <div class="w-20 h-1 bg-brand-gold mb-8"></div>
+                    </div>
+                    <p class="text-brand-gray text-lg leading-relaxed mb-8 font-light">
+                        Jillania Restaurant is not just an eatery; it's a sanctuary for those who appreciate the deep
+                        artistry of authentic Pakistani and Mughlai flavors.
                     </p>
-                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-                        Our journey began with a simple vision: to bring the rich culinary heritage of Pakistan to your
-                        table. Every dish is prepared with love, using time-honored recipes passed down through
-                        generations.
+                    <p class="text-brand-gray text-lg leading-relaxed mb-8 font-light">
+                        Every ingredient is selected with uncompromising standards, and every spice is ground by hand to
+                        ensure that the heritage of the Royal Kitchens is preserved in every bite.
                     </p>
-                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                        From succulent BBQ to flavorful curries, from aromatic biryanis to freshly baked breads, we
-                        ensure that every bite is a celebration of authentic taste and uncompromising quality.
-                    </p>
-                    <div class="flex items-center space-x-8">
-                        <div class="text-center">
-                            <div class="text-4xl font-display font-bold text-brand-gold">30+</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Years Experience</div>
+                    <div class="grid grid-cols-2 gap-10">
+                        <div
+                            class="text-center p-6 border border-brand-gold/20 rounded-xl hover:border-brand-gold/50 transition-colors duration-300">
+                            <span class="block text-3xl font-display font-bold text-brand-gold mb-1">25+</span>
+                            <span class="text-brand-cream/60 text-xs tracking-widest uppercase">Years of Craft</span>
                         </div>
-                        <div class="text-center">
-                            <div class="text-4xl font-display font-bold text-brand-gold">100+</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Menu Items</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-4xl font-display font-bold text-brand-gold">50K+</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Happy Customers</div>
+                        <div
+                            class="text-center p-6 border border-brand-gold/20 rounded-xl hover:border-brand-gold/50 transition-colors duration-300">
+                            <span class="block text-3xl font-display font-bold text-brand-gold mb-1">15+</span>
+                            <span class="text-brand-cream/60 text-xs tracking-widest uppercase">Master Chefs</span>
                         </div>
                     </div>
-                </div>
-                <div class="relative">
-                    <div class="absolute inset-0 bg-brand-gold opacity-20 rounded-lg transform rotate-6"></div>
-                    <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&h=600&fit=crop"
-                        alt="Restaurant ambiance" class="relative rounded-lg shadow-2xl w-full h-96 object-cover">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Menu Section -->
-    <section id="menu" class="py-20 bg-brand-cream dark:bg-dark-bg transition-colors">
+    <section id="menu" class="py-20 bg-brand-charcoal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-brand-maroon dark:text-brand-gold mb-4">
-                    Our Menu
-                </h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400">Discover our authentic Pakistani cuisine</p>
+            <div class="text-center mb-16">
+                <span class="text-brand-gold tracking-[0.3em] uppercase text-xs font-semibold mb-3 block">Exquisite
+                    Selection</span>
+                <h2 class="text-5xl md:text-6xl font-display font-bold text-brand-cream">Our <span
+                        class="text-brand-gold">Menu</span></h2>
+                <div class="w-16 h-px bg-brand-gold mx-auto mt-6"></div>
             </div>
 
-            <!-- Menu Category Filters -->
-            <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 mb-16 px-4">
                 <button
-                    class="menu-filter active px-6 py-3 bg-brand-maroon text-white rounded-lg font-semibold hover:bg-brand-green transition-all duration-300"
+                    class="menu-filter active px-8 py-3 bg-brand-gold text-brand-charcoal font-bold tracking-widest uppercase text-xs transition-all duration-300 border border-brand-gold"
                     data-category="all">
-                    All Items
+                    All
                 </button>
                 <button
-                    class="menu-filter px-6 py-3 bg-white text-brand-maroon rounded-lg font-semibold hover:bg-brand-maroon hover:text-white transition-all duration-300"
+                    class="menu-filter px-8 py-3 bg-transparent text-brand-gold font-bold tracking-widest uppercase text-xs transition-all duration-300 border border-brand-gold/30 hover:border-brand-gold"
                     data-category="bbq">
                     BBQ
                 </button>
                 <button
-                    class="menu-filter px-6 py-3 bg-white text-brand-maroon rounded-lg font-semibold hover:bg-brand-maroon hover:text-white transition-all duration-300"
+                    class="menu-filter px-8 py-3 bg-transparent text-brand-gold font-bold tracking-widest uppercase text-xs transition-all duration-300 border border-brand-gold/30 hover:border-brand-gold"
                     data-category="curries">
                     Curries
                 </button>
                 <button
-                    class="menu-filter px-6 py-3 bg-white text-brand-maroon rounded-lg font-semibold hover:bg-brand-maroon hover:text-white transition-all duration-300"
+                    class="menu-filter px-8 py-3 bg-transparent text-brand-gold font-bold tracking-widest uppercase text-xs transition-all duration-300 border border-brand-gold/30 hover:border-brand-gold"
                     data-category="rice">
                     Rice
                 </button>
                 <button
-                    class="menu-filter px-6 py-3 bg-white text-brand-maroon rounded-lg font-semibold hover:bg-brand-maroon hover:text-white transition-all duration-300"
+                    class="menu-filter px-8 py-3 bg-transparent text-brand-gold font-bold tracking-widest uppercase text-xs transition-all duration-300 border border-brand-gold/30 hover:border-brand-gold"
                     data-category="breads">
                     Breads
                 </button>
                 <button
-                    class="menu-filter px-6 py-3 bg-white text-brand-maroon rounded-lg font-semibold hover:bg-brand-maroon hover:text-white transition-all duration-300"
+                    class="menu-filter px-8 py-3 bg-transparent text-brand-gold font-bold tracking-widest uppercase text-xs transition-all duration-300 border border-brand-gold/30 hover:border-brand-gold"
                     data-category="drinks">
                     Drinks
                 </button>
             </div>
 
             <!-- Menu Items Grid -->
-            <div id="menu-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="menu-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- BBQ Items -->
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="bbq">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.08.59 AM.jpeg" alt="Menu 1"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 1
-                            </h3>
-                            <span class="text-brand-gold font-bold">$12.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 1</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$12.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Tender chicken marinated in yogurt and spices,
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Tender chicken marinated in yogurt
+                            and spices,
                             grilled to perfection
                         </p>
                     </div>
                 </div>
 
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="bbq">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.08.57 AM (2).jpeg" alt="Menu 2"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 2
-                            </h3>
-                            <span class="text-brand-gold font-bold">$14.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 2</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$14.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Minced meat kebabs with aromatic spices, charcoal
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Minced meat kebabs with aromatic
+                            spices, charcoal
                             grilled</p>
                     </div>
                 </div>
 
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="bbq">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.08.57 AM.jpeg" alt="Menu 3"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 3
-                            </h3>
-                            <span class="text-brand-gold font-bold">$18.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 3</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$18.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Succulent lamb chops marinated in special Jillania
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Succulent lamb chops marinated in
+                            special Jillania
                             spices</p>
                     </div>
                 </div>
 
                 <!-- Curries -->
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="curries">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.09.00 AM.jpeg" alt="Menu 4"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 4
-                            </h3>
-                            <span class="text-brand-gold font-bold">$13.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 4</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$13.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Creamy tomato-based curry with tender chicken pieces
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Creamy tomato-based curry with
+                            tender chicken pieces
                         </p>
                     </div>
                 </div>
 
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="curries">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.09.01 AM.jpeg" alt="Menu 5"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 5
-                            </h3>
-                            <span class="text-brand-gold font-bold">$15.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 5</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$15.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Slow-cooked beef stew with rich, flavorful gravy</p>
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Slow-cooked beef stew with rich,
+                            flavorful gravy</p>
                     </div>
                 </div>
 
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="curries">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.08.58 AM.jpeg" alt="Menu 6"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 6
-                            </h3>
-                            <span class="text-brand-gold font-bold">$14.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 6</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$14.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Traditional wok-cooked chicken with tomatoes and
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Traditional wok-cooked chicken
+                            with tomatoes and
                             spices</p>
                     </div>
                 </div>
 
                 <!-- Rice -->
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="rice">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.08.56 AM.jpeg" alt="Menu 7"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 7
-                            </h3>
-                            <span class="text-brand-gold font-bold">$12.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 7</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$12.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Fragrant basmati rice layered with spiced chicken
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Fragrant basmati rice layered with
+                            spiced chicken
                         </p>
                     </div>
                 </div>
 
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="rice">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.08.57 AM (1).jpeg" alt="Menu 8"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 8
-                            </h3>
-                            <span class="text-brand-gold font-bold">$16.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 8</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$16.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Premium biryani with tender mutton pieces and
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Premium biryani with tender mutton
+                            pieces and
                             aromatic rice</p>
                     </div>
                 </div>
 
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="rice">
-                    <div class="h-48 overflow-hidden cursor-pointer"
-                        onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.09.00 AM (1).jpeg" alt="Menu 9"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 9
-                            </h3>
-                            <span class="text-brand-gold font-bold">$9.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 9</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$9.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Light and fluffy rice with fresh vegetables and mild
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Light and fluffy rice with fresh
+                            vegetables and mild
                             spices</p>
                     </div>
                 </div>
 
                 <!-- Breads -->
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="breads">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.09.00 AM (1).jpeg" alt="Menu 10"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 10
-                            </h3>
-                            <span class="text-brand-gold font-bold">$2.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 10</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$2.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Soft, pillowy flatbread brushed with butter</p>
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Soft, pillowy flatbread brushed
+                            with butter</p>
                     </div>
                 </div>
 
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="breads">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.08.56 AM.jpeg" alt="Menu 11"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 11
-                            </h3>
-                            <span class="text-brand-gold font-bold">$3.49</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 11</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$3.49</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Naan topped with fresh garlic and herbs</p>
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Naan topped with fresh garlic and
+                            herbs</p>
                     </div>
                 </div>
 
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="breads">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.08.57 AM.jpeg" alt="Menu 12"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 12
-                            </h3>
-                            <span class="text-brand-gold font-bold">$1.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 12</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$1.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Whole wheat bread baked in traditional tandoor</p>
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Whole wheat bread baked in
+                            traditional tandoor</p>
                     </div>
                 </div>
 
                 <!-- Drinks -->
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="drinks">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.08.57 AM (1).jpeg" alt="Menu 13"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 13
-                            </h3>
-                            <span class="text-brand-gold font-bold">$4.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 13</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$4.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Refreshing yogurt-based drink with sweet mango</p>
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Refreshing yogurt-based drink with
+                            sweet mango</p>
                     </div>
                 </div>
 
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="drinks">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.08.56 AM.jpeg" alt="Menu 14"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 14
-                            </h3>
-                            <span class="text-brand-gold font-bold">$2.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 14</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$2.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Traditional spiced tea with aromatic herbs</p>
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Traditional spiced tea with
+                            aromatic herbs</p>
                     </div>
                 </div>
 
-                <div class="menu-item bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                <div class="menu-item bg-[#111] border border-brand-gold/10 p-4 rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.03] hover:border-brand-gold/40 transition-all duration-500"
                     data-category="drinks">
-                    <div class="h-48 overflow-hidden">
+                    <div class="h-64 overflow-hidden rounded-lg mb-6">
                         <img src="WhatsApp Image 2026-02-09 at 11.08.59 AM.jpeg" alt="Menu 15"
                             class="w-full h-full object-cover">
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold">Menu 15
-                            </h3>
-                            <span class="text-brand-gold font-bold">$3.99</span>
+                    <div class="">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-display font-bold text-brand-gold">Menu 15</h3>
+                            <div class="h-px flex-grow bg-brand-gold/20 mx-4"></div>
+                            <span class="text-brand-gold-light font-display text-xl">$3.99</span>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">Freshly squeezed seasonal fruit juice</p>
+                        <p class="text-brand-gray font-light text-sm leading-relaxed">Freshly squeezed seasonal fruit
+                            juice</p>
                     </div>
                 </div>
             </div>
@@ -552,67 +584,82 @@
     </section>
 
     <!-- Gallery Section -->
-    <section id="gallery" class="py-20 bg-white dark:bg-slate-900 transition-colors">
+    <section id="gallery" class="py-24 bg-brand-charcoal overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-brand-maroon dark:text-brand-gold mb-4">
-                    Gallery
-                </h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400">A glimpse of our culinary artistry</p>
+            <div class="text-center mb-20">
+                <span class="text-brand-gold tracking-[0.3em] uppercase text-xs font-semibold mb-3 block">Visual
+                    Artistry</span>
+                <h2 class="text-5xl md:text-6xl font-display font-bold text-brand-cream">Our <span
+                        class="text-brand-gold">Gallery</span></h2>
+                <p class="mt-6 text-brand-gray font-light tracking-wide">A celebration of spices, colors, and textures
+                </p>
+                <div class="w-16 h-px bg-brand-gold mx-auto mt-8"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg group cursor-pointer h-64">
-                    <img src="WhatsApp Image 2026-02-09 at 11.08.56 AM.jpeg" alt="Food Gallery"
-                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div
+                    class="gallery-item relative overflow-hidden rounded-2xl group cursor-pointer h-80 shadow-2xl border border-brand-gold/10 hover:border-brand-gold/50 transition-all duration-500">
+                    <img src="WhatsApp Image 2026-02-09 at 11.08.56 AM.jpeg" alt="Exquisite Platter"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <p class="text-white font-display text-xl">Delicious Cuisine</p>
+                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                        <span class="text-brand-gold text-xs tracking-widest uppercase mb-2">Signature Dish</span>
+                        <p class="text-brand-cream font-display text-2xl">The Royal Platter</p>
                     </div>
                 </div>
 
-                <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg group cursor-pointer h-64">
-                    <img src="WhatsApp Image 2026-02-09 at 11.08.57 AM (2).jpeg" alt="BBQ Dishes"
-                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                <div
+                    class="gallery-item relative overflow-hidden rounded-2xl group cursor-pointer h-80 shadow-2xl border border-brand-gold/10 hover:border-brand-gold/50 transition-all duration-500">
+                    <img src="WhatsApp Image 2026-02-09 at 11.08.57 AM (2).jpeg" alt="BBQ Masterpiece"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <p class="text-white font-display text-xl">BBQ Specialties</p>
+                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                        <span class="text-brand-gold text-xs tracking-widest uppercase mb-2">Tradition</span>
+                        <p class="text-brand-cream font-display text-2xl">Chargrilled Perfection</p>
                     </div>
                 </div>
 
-                <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg group cursor-pointer h-64">
-                    <img src="WhatsApp Image 2026-02-09 at 11.08.58 AM.jpeg" alt="Restaurant Interior"
-                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                <div
+                    class="gallery-item relative overflow-hidden rounded-2xl group cursor-pointer h-80 shadow-2xl border border-brand-gold/10 hover:border-brand-gold/50 transition-all duration-500">
+                    <img src="WhatsApp Image 2026-02-09 at 11.08.58 AM.jpeg" alt="Luxe Ambience"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <p class="text-white font-display text-xl">Elegant Ambiance</p>
+                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                        <span class="text-brand-gold text-xs tracking-widest uppercase mb-2">Experience</span>
+                        <p class="text-brand-cream font-display text-2xl">Golden Hour Dining</p>
                     </div>
                 </div>
 
-                <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg group cursor-pointer h-64">
+                <div
+                    class="gallery-item relative overflow-hidden rounded-2xl group cursor-pointer h-80 shadow-2xl border border-brand-gold/10 hover:border-brand-gold/50 transition-all duration-500">
                     <img src="WhatsApp Image 2026-02-09 at 11.08.59 AM.jpeg" alt="Traditional Drinks"
-                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <p class="text-white font-display text-xl">Refreshing Drinks</p>
+                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                        <span class="text-brand-gold text-xs tracking-widest uppercase mb-2">Refreshment</span>
+                        <p class="text-brand-cream font-display text-2xl">Exotic Beverages</p>
                     </div>
                 </div>
 
-                <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg group cursor-pointer h-64">
+                <div
+                    class="gallery-item relative overflow-hidden rounded-2xl group cursor-pointer h-80 shadow-2xl border border-brand-gold/10 hover:border-brand-gold/50 transition-all duration-500">
                     <img src="WhatsApp Image 2026-02-09 at 11.09.00 AM.jpeg" alt="Dining Experience"
-                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <p class="text-white font-display text-xl">Premium Dining</p>
+                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                        <span class="text-brand-gold text-xs tracking-widest uppercase mb-2">Ambiance</span>
+                        <p class="text-brand-cream font-display text-2xl">Unforgettable Evenings</p>
                     </div>
                 </div>
 
-                <div class="gallery-item relative overflow-hidden rounded-lg shadow-lg group cursor-pointer h-64">
+                <div
+                    class="gallery-item relative overflow-hidden rounded-2xl group cursor-pointer h-80 shadow-2xl border border-brand-gold/10 hover:border-brand-gold/50 transition-all duration-500">
                     <img src="WhatsApp Image 2026-02-09 at 11.09.01 AM.jpeg" alt="Fresh Breads"
-                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <p class="text-white font-display text-xl">Freshly Baked</p>
+                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                        <span class="text-brand-gold text-xs tracking-widest uppercase mb-2">Artisan</span>
+                        <p class="text-brand-cream font-display text-2xl">Freshly Baked Breads</p>
                     </div>
                 </div>
             </div>
@@ -620,147 +667,165 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-brand-cream dark:bg-dark-bg transition-colors">
+    <section id="contact" class="py-24 bg-brand-charcoal relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-brand-maroon dark:text-brand-gold mb-4">
-                    Contact Us
-                </h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400">Visit us or get in touch</p>
-            </div>
+            <div class="bg-black/40 border border-brand-gold/10 rounded-3xl overflow-hidden shadow-2xl">
+                <div class="grid lg:grid-cols-2">
+                    <!-- Info -->
+                    <div class="p-12 lg:p-20 bg-brand-gold text-brand-charcoal">
+                        <h2 class="text-5xl font-display font-bold mb-8">Visit <span class="block">The Manor</span></h2>
+                        <p class="text-brand-charcoal/80 text-lg mb-12 font-light">Join us for an unforgettable evening
+                            where every detail is curated for your pleasure.</p>
 
-            <div class="max-w-3xl mx-auto">
-                <!-- Contact Information -->
-                <div class="space-y-8">
-                    <div class="flex items-start space-x-4">
-                        <div
-                            class="w-12 h-12 bg-brand-maroon rounded-full flex items-center justify-center flex-shrink-0">
-                            <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                </path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold mb-2">
-                                Address</h3>
-                            <p class="text-gray-700 dark:text-gray-300">123 Main Street<br>Lahore, Punjab
-                                54000<br>Pakistan</p>
+                        <div class="space-y-8">
+                            <div class="flex items-start space-x-6">
+                                <div
+                                    class="w-12 h-12 bg-black/5 rounded-full flex items-center justify-center shrink-0">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold tracking-widest uppercase text-xs mb-1">Our Location</h4>
+                                    <p class="font-light">123 Culinary Art Avenue, Fine Dining District</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-6">
+                                <div
+                                    class="w-12 h-12 bg-black/5 rounded-full flex items-center justify-center shrink-0">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold tracking-widest uppercase text-xs mb-1">Make a Call</h4>
+                                    <p class="font-light">+92 300 1234567</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-6">
+                                <div
+                                    class="w-12 h-12 bg-black/5 rounded-full flex items-center justify-center shrink-0">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold tracking-widest uppercase text-xs mb-1">Email Us</h4>
+                                    <p class="font-light">info@jillaniarestaurant.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-6">
+                                <div
+                                    class="w-12 h-12 bg-black/5 rounded-full flex items-center justify-center shrink-0">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold tracking-widest uppercase text-xs mb-1">Opening Hours</h4>
+                                    <p class="font-light">Mon - Sun: 12:00 PM - 11:00 PM</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="flex items-start space-x-4">
-                        <div
-                            class="w-12 h-12 bg-brand-maroon rounded-full flex items-center justify-center flex-shrink-0">
-                            <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold mb-2">Phone
-                            </h3>
-                            <p class="text-gray-700 dark:text-gray-300">+92 300 1234567<br>+92 42 1234567</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start space-x-4">
-                        <div
-                            class="w-12 h-12 bg-brand-maroon rounded-full flex items-center justify-center flex-shrink-0">
-                            <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold mb-2">Email
-                            </h3>
-                            <p class="text-gray-700 dark:text-gray-300">
-                                info@jillaniarestaurant.com<br>reservations@jillaniarestaurant.com
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start space-x-4">
-                        <div
-                            class="w-12 h-12 bg-brand-maroon rounded-full flex items-center justify-center flex-shrink-0">
-                            <svg class="w-6 h-6 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-display font-bold text-brand-maroon dark:text-brand-gold mb-2">
-                                Opening Hours</h3>
-                            <p class="text-gray-700 dark:text-gray-300">
-                                Monday - Sunday<br>
-                                12:00 PM - 11:00 PM<br>
-                                <span class="text-brand-gold font-semibold">Open 7 Days a Week</span>
-                            </p>
-                        </div>
+                    <!-- Form -->
+                    <div class="p-12 lg:p-20 bg-black/60">
+                        <form id="contact-form" class="space-y-6">
+                            <div>
+                                <label
+                                    class="block text-xs tracking-widest uppercase text-brand-gold mb-2 font-bold">Full
+                                    Name</label>
+                                <input type="text" id="name"
+                                    class="w-full bg-white/5 border border-white/10 p-4 text-brand-cream focus:border-brand-gold focus:outline-none transition-colors"
+                                    placeholder="Full Name">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-xs tracking-widest uppercase text-brand-gold mb-2 font-bold">Email
+                                    Address</label>
+                                <input type="email" id="email"
+                                    class="w-full bg-white/5 border border-white/10 p-4 text-brand-cream focus:border-brand-gold focus:outline-none transition-colors"
+                                    placeholder="Email Address">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-xs tracking-widest uppercase text-brand-gold mb-2 font-bold">Message</label>
+                                <textarea id="message" rows="4"
+                                    class="w-full bg-white/5 border border-white/10 p-4 text-brand-cream focus:border-brand-gold focus:outline-none transition-colors"
+                                    placeholder="Your Message"></textarea>
+                            </div>
+                            <button type="submit"
+                                class="w-full py-4 bg-brand-gold text-brand-charcoal font-bold tracking-widest uppercase hover:bg-white transition-all duration-300">Send
+                                Message</button>
+                            <p id="form-message" class="hidden mt-4 text-center text-sm"></p>
+                        </form>
                     </div>
                 </div>
-
             </div>
-        </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-brand-maroon text-white py-12">
+    <footer class="bg-black pt-24 pb-12 border-t border-brand-gold/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <!-- Logo and Description -->
-                <div>
-                    <div class="mb-4">
-                        <img src="jillania-logo.png" alt="Jillania Restaurant" class="h-16 object-contain">
-                    </div>
-                    <p class="text-gray-300 leading-relaxed">
-                        Experience the authentic taste of Pakistani cuisine with traditional recipes passed down through
-                        generations.
+            <div class="grid md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-2">
+                    <img src="jillania-logo.png" alt="Jillania"
+                        class="h-20 mb-8 grayscale hover:grayscale-0 transition-all duration-500">
+                    <p class="text-brand-gray text-lg font-light leading-relaxed max-w-md">
+                        The ultimate destination for authentic Pakistani and Mughlai fine dining. We invite you to
+                        experience the heritage of spices and the artistry of slow-cooked masterpieces.
                     </p>
                 </div>
 
-                <!-- Quick Links -->
                 <div>
-                    <h3 class="text-xl font-display font-bold text-brand-gold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#home" class="text-gray-300 hover:text-brand-gold transition-colors">Home</a></li>
-                        <li><a href="#about" class="text-gray-300 hover:text-brand-gold transition-colors">About Us</a>
+                    <h4 class="text-brand-gold tracking-widest uppercase text-xs font-bold mb-8">Navigation</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#home"
+                                class="text-brand-cream/60 hover:text-brand-gold transition-colors text-sm font-light uppercase tracking-widest">Home</a>
                         </li>
-                        <li><a href="#menu" class="text-gray-300 hover:text-brand-gold transition-colors">Menu</a></li>
-                        <li><a href="#gallery" class="text-gray-300 hover:text-brand-gold transition-colors">Gallery</a>
+                        <li><a href="#about"
+                                class="text-brand-cream/60 hover:text-brand-gold transition-colors text-sm font-light uppercase tracking-widest">About</a>
                         </li>
-                        <li><a href="#contact" class="text-gray-300 hover:text-brand-gold transition-colors">Contact</a>
+                        <li><a href="#menu"
+                                class="text-brand-cream/60 hover:text-brand-gold transition-colors text-sm font-light uppercase tracking-widest">Menu</a>
+                        </li>
+                        <li><a href="#gallery"
+                                class="text-brand-cream/60 hover:text-brand-gold transition-colors text-sm font-light uppercase tracking-widest">Gallery</a>
+                        </li>
+                        <li><a href="#contact"
+                                class="text-brand-cream/60 hover:text-brand-gold transition-colors text-sm font-light uppercase tracking-widest">Contact</a>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Social Media -->
                 <div>
-                    <h3 class="text-xl font-display font-bold text-brand-gold mb-4">Follow Us</h3>
-                    <div class="flex space-x-4">
-                        <a href="#"
-                            class="w-10 h-10 bg-brand-gold rounded-full flex items-center justify-center hover:bg-yellow-400 transition-all transform hover:scale-110">
-                            <svg class="w-5 h-5 text-brand-maroon" fill="currentColor" viewBox="0 0 24 24">
+                    <h4 class="text-brand-gold tracking-widest uppercase text-xs font-bold mb-8">Connect</h4>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-brand-cream/60 hover:text-brand-gold transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                             </svg>
                         </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-brand-gold rounded-full flex items-center justify-center hover:bg-yellow-400 transition-all transform hover:scale-110">
-                            <svg class="w-5 h-5 text-brand-maroon" fill="currentColor" viewBox="0 0 24 24">
+                        <a href="#" class="text-brand-cream/60 hover:text-brand-gold transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                             </svg>
                         </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-brand-gold rounded-full flex items-center justify-center hover:bg-yellow-400 transition-all transform hover:scale-110">
-                            <svg class="w-5 h-5 text-brand-maroon" fill="currentColor" viewBox="0 0 24 24">
+                        <a href="#" class="text-brand-cream/60 hover:text-brand-gold transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                             </svg>
@@ -805,58 +870,16 @@
         const navbar = document.getElementById('navbar');
 
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('bg-brand-maroon', 'dark:bg-slate-900', 'shadow-lg');
+            if (window.scrollY > 100) {
+                navbar.classList.add('nav-scrolled');
             } else {
-                navbar.classList.remove('bg-brand-maroon', 'dark:bg-slate-900', 'shadow-lg');
-            }
-        });
-
-        // Theme Toggle Logic
-        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-
-        // Change the icons inside the button based on previous settings
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            themeToggleLightIcon.classList.remove('hidden');
-            document.documentElement.classList.add('dark');
-        } else {
-            themeToggleDarkIcon.classList.remove('hidden');
-            document.documentElement.classList.remove('dark');
-        }
-
-        const themeToggleBtn = document.getElementById('theme-toggle');
-
-        themeToggleBtn.addEventListener('click', function () {
-            // toggle icons inside button
-            themeToggleDarkIcon.classList.toggle('hidden');
-            themeToggleLightIcon.classList.toggle('hidden');
-
-            // if set via local storage previously
-            if (localStorage.getItem('color-theme')) {
-                if (localStorage.getItem('color-theme') === 'light') {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                }
-
-                // if NOT set via local storage previously
-            } else {
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                }
+                navbar.classList.remove('nav-scrolled');
             }
         });
 
         // Initialize navbar background
-        if (window.scrollY <= 50) {
-            navbar.classList.add('hero-gradient');
+        if (window.scrollY > 100) {
+            navbar.classList.add('nav-scrolled');
         }
 
         // Mobile menu toggle
